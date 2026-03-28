@@ -2,7 +2,7 @@
 
 <!-- README-I18N:START -->
 
-**Türkçe** | [English](./README.en.md)
+[Türkçe](./README.md) | **English**
 
 <!-- README-I18N:END -->
 
@@ -10,30 +10,30 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 
-> Dosya tabanlı, veritabanı gerektirmeyen statik blog motoru. `posts/` içindeki Markdown dosyaları build sırasında okunur; **SSG** ile yüksek performans ve güçlü **SEO** hedeflenir. GitHub profilinizde sergilemek için uygun, üretimde **Coolify + Docker** veya düz Node ile çalıştırılabilir.
+> A file-based blog engine with **no database**. Markdown files under `posts/` are read at build time for **SSG**, strong **SEO**, and fast delivery. Fits a GitHub portfolio showcase and runs on **Coolify + Docker** or plain Node.
 
 ---
 
-## Özet
+## Overview
 
-| Özellik | Açıklama |
-| -------- | -------- |
-| İçerik | `posts/*.md` + `gray-matter` ile frontmatter |
-| Çıktı | `npm run build` → `.next` → `next start` |
-| Vurgulama | Shiki (`@shikijs/rehype`), açık/koyu tema |
-| Okunabilirlik | Tailwind Typography (`prose`) |
-| İçindekiler | h2/h3, `github-slugger` + `rehype-slug` ile uyumlu anchor |
+| Area | Details |
+| ---- | ------- |
+| Content | `posts/*.md` with `gray-matter` frontmatter |
+| Output | `npm run build` → `.next` → `next start` |
+| Highlighting | Shiki (`@shikijs/rehype`), light/dark aware |
+| Reading UX | Tailwind Typography (`prose`) |
+| TOC | h2/h3 only; `github-slugger` aligned with `rehype-slug` |
 
 ```mermaid
 flowchart LR
-  subgraph content [İçerik]
+  subgraph content [Content]
     MD[posts/*.md]
   end
   subgraph build [Build]
     LIB[lib/markdown.ts]
     MD --> LIB
   end
-  subgraph pages [Sayfalar]
+  subgraph pages [Routes]
     HOME["/"]
     POST["/blog/slug"]
   end
@@ -43,46 +43,46 @@ flowchart LR
 
 ---
 
-## Özellikler
+## Features
 
-- **SSG**: `generateStaticParams` ile blog sayfaları önceden üretilir.
-- **Dinamik metadata**: Her yazı için `generateMetadata` (başlık, açıklama, Open Graph).
-- **Tahmini okuma süresi**: Kelime sayısına göre dakika (`src/lib/reading-time.ts`).
-- **Taslak yazılar**: Frontmatter’da `draft: true` → üretim build’inde dışlanır.
-- **Tema**: `next-themes` ile sınıf tabanlı açık/koyu mod.
-- **İkonlar**: `lucide-react`.
+- **SSG** via `generateStaticParams` for blog routes.
+- **Per-post metadata** with `generateMetadata` (title, description, Open Graph).
+- **Reading time** from word count (`src/lib/reading-time.ts`).
+- **Drafts** with `draft: true` in frontmatter (excluded from production builds).
+- **Theming** with `next-themes` (class-based dark mode).
+- **Icons** via `lucide-react`.
 
 ---
 
-## Teknoloji yığını
+## Tech stack
 
 - **Framework**: Next.js 16 (App Router), React 19  
-- **Dil**: TypeScript (`strict`)  
-- **Stil**: Tailwind CSS v4, `@tailwindcss/typography`  
+- **Language**: TypeScript (`strict`)  
+- **Styling**: Tailwind CSS v4, `@tailwindcss/typography`  
 - **Markdown**: `unified`, `remark-parse`, `remark-gfm`, `remark-rehype`, `rehype-stringify`, `rehype-slug`, `rehype-autolink-headings`, `@shikijs/rehype`  
-- **Meta**: `gray-matter`, `github-slugger` (TOC id eşleşmesi)
+- **Frontmatter**: `gray-matter`, `github-slugger` (TOC id parity)
 
 ---
 
-## Proje yapısı
+## Project layout
 
 ```text
 readme-blog/
-├── posts/                 # Markdown yazılar
+├── posts/                 # Markdown posts
 ├── public/
 ├── Dockerfile
 ├── src/
-│   ├── app/               # App Router sayfaları
-│   ├── components/        # layout, blog bileşenleri
-│   ├── lib/               # markdown.ts, reading-time.ts, site.ts
-│   └── types/             # Post, TocItem, …
+│   ├── app/
+│   ├── components/
+│   ├── lib/
+│   └── types/
 ├── .env.example
 └── package.json
 ```
 
 ---
 
-## Kurulum
+## Getting started
 
 ```bash
 git clone <repo-url>
@@ -91,73 +91,73 @@ npm ci
 npm run dev
 ```
 
-Tarayıcıda [http://localhost:3000](http://localhost:3000) adresini açın.
+Open [http://localhost:3000](http://localhost:3000).
 
 ---
 
-## Ortam değişkenleri
+## Environment variables
 
-`.env.example` dosyasını kopyalayarak `.env.local` oluşturun:
+Copy `.env.example` to `.env.local`:
 
-| Değişken | Açıklama |
-| -------- | -------- |
-| `NEXT_PUBLIC_SITE_URL` | Canlı site kökü (`metadataBase`, Open Graph). Örnek: `https://blog.example.com` |
+| Variable | Purpose |
+| -------- | ------- |
+| `NEXT_PUBLIC_SITE_URL` | Public site origin for `metadataBase` and Open Graph (e.g. `https://blog.example.com`) |
 
 ---
 
-## İçerik yazma
+## Writing posts
 
-`posts/` altına `.md` dosyası ekleyin. Dosya adı URL **slug** olur (`merhaba.md` → `/blog/merhaba`).
+Add `.md` files under `posts/`. The filename becomes the URL **slug** (`hello.md` → `/blog/hello`).
 
-Zorunlu frontmatter alanları: `title`, `date` (ISO 8601 önerilir).
+Required frontmatter: `title`, `date` (ISO 8601 recommended).
 
 ```yaml
 ---
-title: "Yazı başlığı"
+title: "Post title"
 date: "2026-03-28"
 tags:
-  - etiket
-excerpt: "Kısa özet (SEO ve kartlarda)."
+  - tag
+excerpt: "Short summary for SEO and cards."
 draft: false
 ---
 
-## İlk bölüm
+## First section
 
-İçerik burada.
+Body goes here.
 ```
 
 ---
 
-## Komutlar
+## Scripts
 
-| Komut | Açıklama |
-| ----- | -------- |
-| `npm run dev` | Geliştirme sunucusu |
-| `npm run build` | Üretim derlemesi |
-| `npm run start` | Üretim sunucusu (`next start`) |
+| Script | Description |
+| ------ | ----------- |
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm run start` | Production server (`next start`) |
 | `npm run lint` | ESLint |
 
 ---
 
-## Docker ve Coolify
+## Docker and Coolify
 
-Çok aşamalı `Dockerfile` örneği repoda mevcuttur: `npm ci` → `npm run build` → `npm run start`, port **3000**, `HOSTNAME=0.0.0.0`.
+The repo includes a multi-stage `Dockerfile`: `npm ci` → `npm run build` → `npm run start`, port **3000**, `HOSTNAME=0.0.0.0`.
 
-Coolify’da örnek akış:
+Typical Coolify flow:
 
-1. GitHub deposunu bağlayın.  
-2. Build: `docker build -t readme-blog .` veya platformun Node build adımları (`npm ci`, `npm run build`).  
-3. Start: `npm run start`.  
-4. Üretim URL’sini `NEXT_PUBLIC_SITE_URL` olarak verin.
-
----
-
-## Güvenlik notu
-
-Markdown HTML’e dönüştürülüp sunucuda güvenilir kaynaklardan geldiği varsayılır. Üçüncü taraftan ham Markdown kabul etmeyin veya ayrıca sanitize edin.
+1. Connect the GitHub repository.  
+2. Build with Docker or Node steps (`npm ci`, `npm run build`).  
+3. Start with `npm run start`.  
+4. Set `NEXT_PUBLIC_SITE_URL` to your public URL.
 
 ---
 
-## Lisans
+## Security note
 
-Bu şablon projeyi kendi lisans tercihinize göre güncelleyin (ör. MIT).
+Rendered HTML is treated as trusted author content. Do not ingest untrusted Markdown without sanitization.
+
+---
+
+## License
+
+Replace with your preferred license (e.g. MIT).
