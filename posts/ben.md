@@ -1,3 +1,13 @@
+---
+title: "Selam, Ben Ahmet Başlık"
+date: "2026-03-28"
+tags:
+  - kişisel
+  - portföy
+excerpt: "Kısa bir özet cümlesi (kart ve SEO için)."
+---
+
+
 # Selam, Ben Ahmet Başlık 👋
 
 **Software & Fintech Engineer | Bilişim Sistemleri Mühendisi | Tech Educator**
