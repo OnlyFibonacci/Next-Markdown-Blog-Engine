@@ -6,6 +6,7 @@ import { MarkdownContent } from "@/components/blog/markdown-content";
 import { TableOfContents } from "@/components/blog/table-of-contents";
 import { getPostBySlug, getPostSlugs } from "@/lib/markdown";
 import { siteConfig } from "@/lib/site";
+import { tagToSlug } from "@/lib/tag-utils";
 
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
 
@@ -89,12 +90,13 @@ export default async function BlogPostPage({ params }: PageProps) {
         {post.tags.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-2">
             {post.tags.map((tag) => (
-              <span
+              <Link
                 key={tag}
-                className="rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300"
+                href={`/tag/${tagToSlug(tag)}`}
+                className="rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-700 transition hover:bg-emerald-100 hover:text-emerald-900 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-emerald-950 dark:hover:text-emerald-200"
               >
                 {tag}
-              </span>
+              </Link>
             ))}
           </div>
         )}
