@@ -30,6 +30,12 @@ export function Header({ className }: { className?: string }) {
           >
             Yazılar
           </Link>
+          <Link
+            href="/markdown-rehberi"
+            className="text-sm text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+          >
+            Markdown
+          </Link>
           <ThemeToggle />
         </nav>
       </div>
