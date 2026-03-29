@@ -4,11 +4,29 @@ import { getAllPosts } from "@/lib/markdown";
 import type { PostMeta } from "@/types/post";
 
 /**
- * Etiket metnini URL segmenti için GitHub uyumlu slug'a çevirir.
+ * Türkçe harfleri URL'de güvenli ASCII karşılıklarına çevirir (ş→s, ı→i, ğ→g vb.).
+ * Böylece rota segmenti yalnızca [a-z0-9-] kalır; 404 ve kodlama sorunları önlenir.
+ */
+function transliterateTurkishForSlug(text: string): string {
+  const lower = text.trim().normalize("NFC").toLocaleLowerCase("tr-TR");
+  const map: Record<string, string> = {
+    ç: "c",
+    ğ: "g",
+    ı: "i",
+    i: "i",
+    ö: "o",
+    ş: "s",
+    ü: "u",
+  };
+  return [...lower].map((ch) => map[ch] ?? ch).join("");
+}
+
+/**
+ * Etiket metnini URL segmenti için slug üretir (ASCII, github-slugger ile noktalama/boşluk temizliği).
  */
 export function tagToSlug(raw: string): string {
   const slugger = new GithubSlugger();
-  return slugger.slug(raw.trim());
+  return slugger.slug(transliterateTurkishForSlug(raw));
 }
 
 /**
