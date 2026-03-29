@@ -1,3 +1,14 @@
+---
+title: "Tradingview CV"
+date: "2026-03-28"
+tags:
+  - CV
+  - portföy
+excerpt: "Tradingview Apply"
+---
+
+
+
 # Ahmet Başlık
 
 **Software & Fintech Engineer** | **Pine Script Authority** | **Tech Educator**
